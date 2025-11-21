@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Timestamped Todo List</title>
+    <link rel="stylesheet" href="styles.css" />
+  </head>
+  <body>
+    <div class="page-wrap">
+      <header class="site-header">
+        <div class="brand">
+          <div class="logo-dot" aria-hidden="true"></div>
+          <div>
+            <p class="eyebrow">Personal Productivity</p>
+            <h1>Pulse Tasks</h1>
+          </div>
+        </div>
+        <p class="tagline">
+          Keep your running ideas in sync with real time stamps, right in your browser.
+        </p>
+      </header>
+
+      <main class="app-shell">
+        <section class="todo-panel">
+          <div class="panel-header">
+            <h2>Today's Log</h2>
+            <p>Capture what matters now—each entry is tagged with the exact moment it was created.</p>
+          </div>
+          <form id="todo-form" autocomplete="off">
+            <label class="sr-only" for="todo-input">Add a todo</label>
+            <input
+              id="todo-input"
+              type="text"
+              name="todo"
+              placeholder="Type a new todo and press Enter"
+              required
+              maxlength="120"
+            />
+            <button type="submit">Add Todo</button>
+          </form>
+          <ul id="todo-list" aria-live="polite" aria-label="Todo list"></ul>
+          <p class="panel-hint">Your list is saved automatically - refresh to keep going later.</p>
+        </section>
+      </main>
+
+      <footer class="site-footer">
+        <p>Created by Prashant. Data stays private on this device.</p>
+      </footer>
+    </div>
+    <script src="app.js" defer></script>
+  </body>
+</html>
