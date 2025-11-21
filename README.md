@@ -16,14 +16,15 @@ The repo ships with an `nginx`-based image for static hosting.
 
 ```bash
 # from the project root
-docker build -t pulse-tasks .
-docker run -dp 8080:80 pulse-tasks
+docker build -t pulseapp .
+docker run -dp 8080:80 --name pulseapp-container pulseapp
 ```
 
-Then load http://localhost:8080 and interact with the app. When finished, stop the container:
+Then load http://localhost:8080 and interact with the app. When finished, stop and remove the named container:
 
 ```bash
-docker stop <container_id_or_name>
+docker stop pulseapp-container
+docker rm pulseapp-container
 ```
 
 ## File overview

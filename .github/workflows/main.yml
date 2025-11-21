@@ -1,0 +1,43 @@
+name: PulseApp
+
+on:
+  push:
+    branches:
+      - main
+  workflow_dispatch:
+
+jobs:
+  deployment:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout code from GitHub repo
+        uses: actions/checkout@v4
+
+      - name: Copy code to EC2 server
+        uses: appleboy/scp-action@v0.1.7
+        with:
+          host: ${{ secrets.HOST }}
+          username: ${{ secrets.USERNAME }}
+          key: ${{ secrets.KEY }}
+          port: 22
+          source: ./
+          target: /home/ubuntu
+
+      - name: Deploy via SSH
+        uses: appleboy/ssh-action@v1.2.0
+        with:
+          host: ${{ secrets.HOST }}
+          username: ${{ secrets.USERNAME }}
+          key: ${{ secrets.KEY }}
+          port: 22
+          script: |
+            set -eo pipefail
+            cd /home/ubuntu
+            sudo docker stop pulseapp-container || true
+            sudo docker rm pulseapp-container || true
+            sudo docker image prune -f
+            sudo docker build -t pulseapp:latest .
+            sudo docker run -d --restart unless-stopped --name pulseapp-container -p 80:80 pulseapp:latest
+            sudo docker image prune -f
+            sudo docker ps -a
